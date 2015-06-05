@@ -54,12 +54,10 @@ class VP_Yandex_Maps_add_metaboxes_Class{
 		    add_action( 'save_post', array( $this, 'save' ), 0 );
 		    add_action( 'admin_enqueue_scripts', array(&$this,'add_scripts'), 20 );
 	    }
+
     }
 
     function  add_scripts(){
-        global $current_screen;
-
-
         wp_register_script('api-maps-yandex', '//api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU', array('jquery'), '2.0', false );
         wp_register_script('location-tool', plugin_dir_url(__FILE__).'js/location-tool.js', array('jquery', 'api-maps-yandex'), '1.0', false );
         wp_register_script('cross-control', plugin_dir_url(__FILE__).'js/cross-control.js', array('jquery', 'api-maps-yandex','location-tool'), '1.0', false );
