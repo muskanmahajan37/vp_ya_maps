@@ -46,29 +46,34 @@ add_action('init', 'VP_Yandex_Maps_init_meta_boxes');
 
 class VP_Yandex_Maps_add_metaboxes_Class{
     public function __construct(){
-        add_action('add_meta_boxes', array($this, 'add_meta_box'),20);
-        add_action('save_post', array($this, 'save'), 0);
-        add_action('admin_enqueue_scripts', array(&$this, 'add_scripts'), 20);
+	    global $current_screen;
+	    $types=array('post');
+	    $types = apply_filters('vp_ya_maps_types', $types);
+	    if( in_array($current_screen->id,$types) ) {
+		    add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 20 );
+		    add_action( 'save_post', array( $this, 'save' ), 0 );
+		    add_action( 'admin_enqueue_scripts', array(&$this,'add_scripts'), 20 );
+	    }
     }
 
     function  add_scripts(){
         global $current_screen;
-        $types=array();
-        $types = apply_filters('vp_ya_maps_types', $types);
+
+
         wp_register_script('api-maps-yandex', '//api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU', array('jquery'), '2.0', false );
         wp_register_script('location-tool', plugin_dir_url(__FILE__).'js/location-tool.js', array('jquery', 'api-maps-yandex'), '1.0', false );
         wp_register_script('cross-control', plugin_dir_url(__FILE__).'js/cross-control.js', array('jquery', 'api-maps-yandex','location-tool'), '1.0', false );
         wp_register_script('geolocation-button', plugin_dir_url(__FILE__).'js/geolocation-button.js', array('jquery', 'api-maps-yandex','location-tool','cross-control'), '1.0', false );
         wp_register_script('api-maps-init', plugin_dir_url(__FILE__).'js/api-maps-init.js', array('jquery', 'api-maps-yandex','location-tool','cross-control','geolocation-button'), '1.0', false );
 
-        if( in_array($current_screen->id,$types) ){
+
         wp_enqueue_script('api-maps-yandex');
         wp_enqueue_script('location-tool');
         wp_enqueue_script('cross-control');
         wp_enqueue_script('geolocation-button');
         wp_enqueue_script('api-maps-init');
         wp_enqueue_style('api-maps-admin', plugin_dir_url(__FILE__) . 'css/api-maps-admin.css', array(), '1.0', false);
-        }
+
     }
 
     public function add_meta_box($post_type){
