@@ -70,7 +70,7 @@ ymaps.ready(function () {
          */
         _onBtnClick: function (e) {
             // Меняем иконку кнопки на прелоадер.
-            this.toggleIconImage('/wp-content/plugins/vp_ya_maps/images/loader.gif');
+            this.toggleIconImage('/wp-content/plugins/vp_ya_maps/public/img/loader.gif');
 
             if(navigator.geolocation) {
                 // Запрашиваем текущие координаты устройства.

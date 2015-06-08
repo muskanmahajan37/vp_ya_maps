@@ -59,10 +59,10 @@ class VP_Yandex_Maps_add_metaboxes_Class{
 
     function  add_scripts(){
         wp_register_script('api-maps-yandex', '//api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU', array('jquery'), '2.0', false );
-        wp_register_script('location-tool', plugin_dir_url(__FILE__).'js/location-tool.js', array('jquery', 'api-maps-yandex'), '1.0', false );
-        wp_register_script('cross-control', plugin_dir_url(__FILE__).'js/cross-control.js', array('jquery', 'api-maps-yandex','location-tool'), '1.0', false );
-        wp_register_script('geolocation-button', plugin_dir_url(__FILE__).'js/geolocation-button.js', array('jquery', 'api-maps-yandex','location-tool','cross-control'), '1.0', false );
-        wp_register_script('api-maps-init', plugin_dir_url(__FILE__).'js/api-maps-init.js', array('jquery', 'api-maps-yandex','location-tool','cross-control','geolocation-button'), '1.0', false );
+        wp_register_script('location-tool', plugin_dir_url(__FILE__).'public/js/location-tool.js', array('jquery', 'api-maps-yandex'), '1.0', false );
+        wp_register_script('cross-control', plugin_dir_url(__FILE__).'public/js/cross-control.js', array('jquery', 'api-maps-yandex','location-tool'), '1.0', false );
+        wp_register_script('geolocation-button', plugin_dir_url(__FILE__).'public/js/geolocation-button.js', array('jquery', 'api-maps-yandex','location-tool','cross-control'), '1.0', false );
+        wp_register_script('api-maps-init', plugin_dir_url(__FILE__).'public/js/api-maps-init.js', array('jquery', 'api-maps-yandex','location-tool','cross-control','geolocation-button'), '1.0', false );
 
 
         wp_enqueue_script('api-maps-yandex');
@@ -70,7 +70,7 @@ class VP_Yandex_Maps_add_metaboxes_Class{
         wp_enqueue_script('cross-control');
         wp_enqueue_script('geolocation-button');
         wp_enqueue_script('api-maps-init');
-        wp_enqueue_style('api-maps-admin', plugin_dir_url(__FILE__) . 'css/api-maps-admin.css', array(), '1.0', false);
+        wp_enqueue_style('api-maps-admin', plugin_dir_url(__FILE__) . 'public/css/api-maps-admin.css', array(), '1.0', false);
 
     }
 

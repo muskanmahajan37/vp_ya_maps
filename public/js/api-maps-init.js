@@ -11,7 +11,7 @@ $(document).ready(function () {
             // Создание кнопки определения местоположения
                 geolocationButton = new GeolocationButton({
                     data: {
-                        image: '/wp-content/plugins/vp_ya_maps/images/wifi.png',
+                        image: '/wp-content/plugins/vp_ya_maps/public/img/wifi.png',
                         title: 'Определить местоположение'
                     },
                     geolocationOptions: {
