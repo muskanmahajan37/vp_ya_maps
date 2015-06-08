@@ -6,6 +6,12 @@ Author: Petrozavodsky
 Author URI: http://alkoweb.ru
 */
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+include plugin_dir_path( __FILE__ ) . 'admin/class-vp-ya-maps-options-page-admin.php';
+$settings = new WordPress_Plugin_Template_Settings( __FILE__ );
+
+
 class VP_Yandex_Maps
 {
     function __construct()
