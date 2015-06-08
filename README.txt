@@ -16,10 +16,6 @@ Dobavlyaeet yandex map to your website using shortcode and widgets. For ease of 
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
 1. Upload `vp_ya_maps` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Paste the shortcode into the body of your post or use the widget in the sidebar
