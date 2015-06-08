@@ -11,13 +11,15 @@ class WordPress_Plugin_Template_Settings {
 	private $assets_url;
 	private $settings_base;
 	private $settings;
+	private $plugin_textdomain;
 
 	public function __construct( $file ) {
 		$this->file          = $file;
 		$this->dir           = dirname( $this->file );
 		$this->assets_dir    = trailingslashit( $this->dir ) . 'admin';
 		$this->assets_url    = esc_url( trailingslashit( plugins_url( '/admin/', $this->file ) ) );
-		$this->settings_base = 'wpt_';
+		$this->settings_base = 'vp_yandex_maps';
+		$this->plugin_textdomain = 'vp_yandex_maps';
 
 		add_action( 'admin_init', array( $this, 'init' ) );
 
@@ -44,7 +46,7 @@ class WordPress_Plugin_Template_Settings {
 	 * @return void
 	 */
 	public function add_menu_item() {
-		$page = add_options_page( __( 'Plugin Settings', 'plugin_textdomain' ), __( 'Plugin Settings', 'plugin_textdomain' ), 'manage_options', 'plugin_settings', array(
+		$page = add_options_page( __( 'Plugin Settings', $this->plugin_textdomain ), __( 'Plugin Settings', $this->plugin_textdomain ), 'manage_options', 'plugin_settings', array(
 			$this,
 			'settings_page'
 		) );
@@ -77,7 +79,7 @@ class WordPress_Plugin_Template_Settings {
 	 * @return array        Modified links
 	 */
 	public function add_settings_link( $links ) {
-		$settings_link = '<a href="options-general.php?page=plugin_settings">' . __( 'Settings', 'plugin_textdomain' ) . '</a>';
+		$settings_link = '<a href="options-general.php?page=plugin_settings">' . __( 'Settings', $this->plugin_textdomain ) . '</a>';
 		array_push( $links, $settings_link );
 
 		return $links;
@@ -89,77 +91,14 @@ class WordPress_Plugin_Template_Settings {
 	 */
 	private function settings_fields() {
 
-		$settings['standard'] = array(
-			'title'       => __( 'Standard', 'plugin_textdomain' ),
-			'description' => __( 'These are fairly standard form input fields.', 'plugin_textdomain' ),
+		$settings['post_types'] = array(
+			'title'       => __( 'Post types', $this->plugin_textdomain ),
+			'description' => __( 'Settings behavior maps for certain types of posts.', $this->plugin_textdomain ),
 			'fields'      => array(
 				array(
-					'id'          => 'text_field',
-					'label'       => __( 'Some Text', 'plugin_textdomain' ),
-					'description' => __( 'This is a standard text field.', 'plugin_textdomain' ),
-					'type'        => 'text',
-					'default'     => '',
-					'placeholder' => __( 'Placeholder text', 'plugin_textdomain' )
-				),
-				array(
-					'id'          => 'password_field',
-					'label'       => __( 'A Password', 'plugin_textdomain' ),
-					'description' => __( 'This is a standard password field.', 'plugin_textdomain' ),
-					'type'        => 'password',
-					'default'     => '',
-					'placeholder' => __( 'Placeholder text', 'plugin_textdomain' )
-				),
-				array(
-					'id'          => 'secret_text_field',
-					'label'       => __( 'Some Secret Text', 'plugin_textdomain' ),
-					'description' => __( 'This is a secret text field - any data saved here will not be displayed after the page has reloaded, but it will be saved.', 'plugin_textdomain' ),
-					'type'        => 'text_secret',
-					'default'     => '',
-					'placeholder' => __( 'Placeholder text', 'plugin_textdomain' )
-				),
-				array(
-					'id'          => 'text_block',
-					'label'       => __( 'A Text Block', 'plugin_textdomain' ),
-					'description' => __( 'This is a standard text area.', 'plugin_textdomain' ),
-					'type'        => 'textarea',
-					'default'     => '',
-					'placeholder' => __( 'Placeholder text for this textarea', 'plugin_textdomain' )
-				),
-				array(
-					'id'          => 'single_checkbox',
-					'label'       => __( 'An Option', 'plugin_textdomain' ),
-					'description' => __( 'A standard checkbox - if you save this option as checked then it will store the option as \'on\', otherwise it will be an empty string.', 'plugin_textdomain' ),
-					'type'        => 'checkbox',
-					'default'     => ''
-				),
-				array(
-					'id'          => 'select_box',
-					'label'       => __( 'A Select Box', 'plugin_textdomain' ),
-					'description' => __( 'A standard select box.', 'plugin_textdomain' ),
-					'type'        => 'select',
-					'options'     => array(
-						'drupal'    => 'Drupal',
-						'joomla'    => 'Joomla',
-						'wordpress' => 'WordPress'
-					),
-					'default'     => 'wordpress'
-				),
-				array(
-					'id'          => 'radio_buttons',
-					'label'       => __( 'Some Options', 'plugin_textdomain' ),
-					'description' => __( 'A standard set of radio buttons.', 'plugin_textdomain' ),
-					'type'        => 'radio',
-					'options'     => array(
-						'superman' => 'Superman',
-						'batman'   => 'Batman',
-						'ironman'  => 'Iron Man'
-					),
-					'default'     => 'batman'
-				),
-				array(
 					'id'          => 'multiple_checkboxes',
-					'label'       => __( 'Some Items', 'plugin_textdomain' ),
-					'description' => __( 'You can select multiple items and they will be stored as an array.', 'plugin_textdomain' ),
+					'label'       => __( 'Some Items', $this->plugin_textdomain ),
+					'description' => __( 'You can select multiple items and they will be stored as an array.', $this->plugin_textdomain ),
 					'type'        => 'checkbox_multi',
 					'options'     => array(
 						'square'    => 'Square',
@@ -172,47 +111,47 @@ class WordPress_Plugin_Template_Settings {
 			)
 		);
 
-		$settings['extra'] = array(
-			'title'       => __( 'Extra', 'plugin_textdomain' ),
-			'description' => __( 'These are some extra input fields that maybe aren\'t as common as the others.', 'plugin_textdomain' ),
-			'fields'      => array(
-				array(
-					'id'          => 'number_field',
-					'label'       => __( 'A Number', 'plugin_textdomain' ),
-					'description' => __( 'This is a standard number field - if this field contains anything other than numbers then the form will not be submitted.', 'plugin_textdomain' ),
-					'type'        => 'number',
-					'default'     => '',
-					'placeholder' => __( '42', 'plugin_textdomain' )
-				),
-				array(
-					'id'          => 'colour_picker',
-					'label'       => __( 'Pick a colour', 'plugin_textdomain' ),
-					'description' => __( 'This uses WordPress\' built-in colour picker - the option is stored as the colour\'s hex code.', 'plugin_textdomain' ),
-					'type'        => 'color',
-					'default'     => '#21759B'
-				),
-				array(
-					'id'          => 'an_image',
-					'label'       => __( 'An Image', 'plugin_textdomain' ),
-					'description' => __( 'This will upload an image to your media library and store the attachment ID in the option field. Once you have uploaded an imge the thumbnail will display above these buttons.', 'plugin_textdomain' ),
-					'type'        => 'image',
-					'default'     => '',
-					'placeholder' => ''
-				),
-				array(
-					'id'          => 'multi_select_box',
-					'label'       => __( 'A Multi-Select Box', 'plugin_textdomain' ),
-					'description' => __( 'A standard multi-select box - the saved data is stored as an array.', 'plugin_textdomain' ),
-					'type'        => 'select_multi',
-					'options'     => array(
-						'linux'   => 'Linux',
-						'mac'     => 'Mac',
-						'windows' => 'Windows'
-					),
-					'default'     => array( 'linux' )
-				)
-			)
-		);
+//		$settings['extra'] = array(
+//			'title'       => __( 'Extra', $this->plugin_textdomain ),
+//			'description' => __( 'These are some extra input fields that maybe aren\'t as common as the others.', $this->plugin_textdomain ),
+//			'fields'      => array(
+//				array(
+//					'id'          => 'number_field',
+//					'label'       => __( 'A Number', $this->plugin_textdomain ),
+//					'description' => __( 'This is a standard number field - if this field contains anything other than numbers then the form will not be submitted.', $this->plugin_textdomain ),
+//					'type'        => 'number',
+//					'default'     => '',
+//					'placeholder' => __( '42', $this->plugin_textdomain )
+//				),
+//				array(
+//					'id'          => 'colour_picker',
+//					'label'       => __( 'Pick a colour', $this->plugin_textdomain ),
+//					'description' => __( 'This uses WordPress\' built-in colour picker - the option is stored as the colour\'s hex code.', $this->plugin_textdomain ),
+//					'type'        => 'color',
+//					'default'     => '#21759B'
+//				),
+//				array(
+//					'id'          => 'an_image',
+//					'label'       => __( 'An Image', $this->plugin_textdomain ),
+//					'description' => __( 'This will upload an image to your media library and store the attachment ID in the option field. Once you have uploaded an imge the thumbnail will display above these buttons.', $this->plugin_textdomain ),
+//					'type'        => 'image',
+//					'default'     => '',
+//					'placeholder' => ''
+//				),
+//				array(
+//					'id'          => 'multi_select_box',
+//					'label'       => __( 'A Multi-Select Box', $this->plugin_textdomain ),
+//					'description' => __( 'A standard multi-select box - the saved data is stored as an array.', $this->plugin_textdomain ),
+//					'type'        => 'select_multi',
+//					'options'     => array(
+//						'linux'   => 'Linux',
+//						'mac'     => 'Mac',
+//						'windows' => 'Windows'
+//					),
+//					'default'     => array( 'linux' )
+//				)
+//			)
+//		);
 
 		$settings = apply_filters( 'plugin_settings_fields', $settings );
 
@@ -361,8 +300,8 @@ class WordPress_Plugin_Template_Settings {
 				}
 
 				$html .= '<img id="' . $option_name . '_preview" class="image_preview" src="' . $image_thumb . '" /><br/>' . "\n";
-				$html .= '<input id="' . $option_name . '_button" type="button" data-uploader_title="' . __( 'Upload an image', 'plugin_textdomain' ) . '" data-uploader_button_text="' . __( 'Use image', 'plugin_textdomain' ) . '" class="image_upload_button button" value="' . __( 'Upload new image', 'plugin_textdomain' ) . '" />' . "\n";
-				$html .= '<input id="' . $option_name . '_delete" type="button" class="image_delete_button button" value="' . __( 'Remove image', 'plugin_textdomain' ) . '" />' . "\n";
+				$html .= '<input id="' . $option_name . '_button" type="button" data-uploader_title="' . __( 'Upload an image', $this->plugin_textdomain ) . '" data-uploader_button_text="' . __( 'Use image', $this->plugin_textdomain ) . '" class="image_upload_button button" value="' . __( 'Upload new image', $this->plugin_textdomain ) . '" />' . "\n";
+				$html .= '<input id="' . $option_name . '_delete" type="button" class="image_delete_button button" value="' . __( 'Remove image', $this->plugin_textdomain ) . '" />' . "\n";
 				$html .= '<input id="' . $option_name . '" class="image_data_field" type="hidden" name="' . $option_name . '" value="' . $data . '"/><br/>' . "\n";
 				break;
 
@@ -421,12 +360,12 @@ class WordPress_Plugin_Template_Settings {
 
 		// Build page HTML
 		$html = '<div class="wrap" id="plugin_settings">' . "\n";
-		$html .= '<h2>' . __( 'Plugin Settings', 'plugin_textdomain' ) . '</h2>' . "\n";
+		$html .= '<h2>' . __( 'Plugin Settings', $this->plugin_textdomain ) . '</h2>' . "\n";
 		$html .= '<form method="post" action="options.php" enctype="multipart/form-data">' . "\n";
 
 		// Setup navigation
 		$html .= '<ul id="settings-sections" class="subsubsub hide-if-no-js">' . "\n";
-		$html .= '<li><a class="tab all current" href="#all">' . __( 'All', 'plugin_textdomain' ) . '</a></li>' . "\n";
+		$html .= '<li><a class="tab all current" href="#all">' . __( 'All', $this->plugin_textdomain ) . '</a></li>' . "\n";
 
 		foreach ( $this->settings as $section => $data ) {
 			$html .= '<li>| <a class="tab" href="#' . $section . '">' . $data['title'] . '</a></li>' . "\n";
@@ -443,7 +382,7 @@ class WordPress_Plugin_Template_Settings {
 		$html .= ob_get_clean();
 
 		$html .= '<p class="submit">' . "\n";
-		$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings', 'plugin_textdomain' ) ) . '" />' . "\n";
+		$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings', $this->plugin_textdomain ) ) . '" />' . "\n";
 		$html .= '</p>' . "\n";
 		$html .= '</form>' . "\n";
 		$html .= '</div>' . "\n";
