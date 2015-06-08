@@ -82,43 +82,11 @@ class VP_Yandex_Maps_add_metaboxes_Class{
         }
     }
 
-   function render_meta_box_content($post){
-    ?>
-         <div id="YMapsID" data-geo='<?php echo $this->add_json_geo(get_post_meta($post->ID, 'center', true),get_post_meta($post->ID, 'mapzoom', true),get_post_meta($post->ID, 'placemarct', true));?>'></div>
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="row-fluid">
-                        <div class="span4"></div>
-                        <div class="span4">
-                            <div class="form-horizontal">
-                                <div  class="control-group">
-                                    <label class="control-label" for="markerPosition">Координаты метки</label>
-                                    <div class="controls">
+	function render_meta_box_content( $post ) {
+		include plugin_dir_path( __FILE__ ) . 'includes/metabox-geocoder.php';
+		echo '<input type="hidden" name="vpyamaps_nonce" value="'.wp_create_nonce(__FILE__).'" />';
 
-                                        <input name="vpyamaps[placemarct]" type="text" id="markerPosition" value="<?php echo get_post_meta($post->ID, 'placemarct', true); ?>">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="mapZoom" >Масштаб карты</label>
-                                    <div class="controls">
-                                        <input type="text" id="mapZoom" name="vpyamaps[mapzoom]" value="<?php echo get_post_meta($post->ID, 'mapzoom', true); ?>">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="mapCenter">Центр карты</label>
-                                    <div class="controls">
-                                        <input type="text" id="mapCenter" name="vpyamaps[center]" value="<?php echo get_post_meta($post->ID, 'center', true); ?>">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span4"></div>
-                    </div>
-                </div>
-            </div>
-        <input type="hidden" name="vpyamaps_nonce" value="<?php echo wp_create_nonce(__FILE__); ?>" />
-        <?php
-    }
+	}
 
     function add_json_geo($center,$mapzoom,$placemarct){
         if($center !=='' or $mapzoom !== ''){
