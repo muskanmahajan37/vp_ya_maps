@@ -44,6 +44,9 @@ function VP_Yandex_Maps_init_meta_boxes()
 	$settings = new WordPress_Plugin_Template_Settings( __FILE__ );
 
 	$settings->menu_title=__('Maps settings','vp_yandex_maps');
+	$settings->page_titlee=__('Maps settings','vp_yandex_maps');
+	$settings->menu_slug='yandex_maps_settings';
+
 }
 
 

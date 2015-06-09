@@ -38,7 +38,6 @@ class WordPress_Plugin_Template_Settings {
 
 
 	public function __set( $property, $value ) {
-		d($property, $value);
 		return $this->$property = $value;
 	}
 
@@ -80,16 +79,17 @@ class WordPress_Plugin_Template_Settings {
 			__( $this->page_title, $this->plugin_textdomain ),
 			__( $this->menu_title, $this->plugin_textdomain ),
 			$this->capability,
-			$this->plugin_settings,
-			array(
-				$this,
-				$this->menu_slug
-			) );
+			$this->menu_slug,
+			array( $this, 'settings_page' )
+
+		);
 		add_action( 'admin_print_styles-' . $page, array(
 			$this,
 			'settings_assets'
 		) );
 	}
+
+
 
 	/**
 	 * Load settings JS & CSS
