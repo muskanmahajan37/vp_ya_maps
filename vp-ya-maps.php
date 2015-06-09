@@ -9,7 +9,7 @@ Author URI: http://alkoweb.ru
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 include plugin_dir_path( __FILE__ ) . 'admin/class-vp-ya-maps-options-page-admin.php';
-$settings = new WordPress_Plugin_Template_Settings( __FILE__ );
+
 
 
 class VP_Yandex_Maps
@@ -39,7 +39,11 @@ $VP_Yandex_Maps = new VP_Yandex_Maps();
 
 function VP_Yandex_Maps_init_meta_boxes()
 {
+
     new VP_Yandex_Maps_add_metaboxes_Class();
+	$settings = new WordPress_Plugin_Template_Settings( __FILE__ );
+
+	$settings->menu_title=__('Maps settings','vp_yandex_maps');
 }
 
 
